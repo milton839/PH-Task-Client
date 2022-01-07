@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const BillsPageData = (props) => {
-    const {_id, name, email, phone} = props.bills;
+    const {_id, name, email, phone, billAmount} = props.bills;
 
     const handleDelete = (id) => {
-         fetch(`http://localhost:5000/billsDelete/${id}`,{
+         fetch(`https://enigmatic-depths-87750.herokuapp.com/billsDelete/${id}`,{
             method:'DELETE'
         })
         .then(response => response.json())
@@ -17,9 +18,12 @@ const BillsPageData = (props) => {
             <td>{name}</td>
             <td>{email}</td>
             <td>{phone}</td>
+            <td>{billAmount}</td>
             <td>{(new Date()).getFullYear()}</td>
             <td>
-                <button type="button" className="btn btn-primary me-2">Edit</button>
+                <Link to={`/billsPage/edit/${_id}`}>
+                    <button type="button" className="btn btn-primary me-2">Edit</button>
+                </Link>
                 <button type="button" className="btn btn-danger" onClick={() => handleDelete(_id)}>Delete</button>
             </td>
         </tr>

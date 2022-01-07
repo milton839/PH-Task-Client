@@ -9,7 +9,9 @@ import Accounts from './Components/Dashboard/DashboardPage/Accounts';
 import BillsPage from './Components/Dashboard/DashboardPage/BillsPage';
 import Contacts from './Components/Dashboard/DashboardPage/Contacts';
 import Deals from './Components/Dashboard/DashboardPage/Deals';
+import EditBillInfo from './Components/Dashboard/DashboardPage/EditBillInfo';
 import EditProfile from './Components/Dashboard/EditProfile/EditProfile';
+import Home from './Components/Home/Home/Home';
 import Login from './Components/Login/Login';
 import NotFound from './Components/NotFound/NotFound';
 
@@ -23,10 +25,10 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-          <BillsPage></BillsPage>
+            <Home></Home>
           </Route>
           <Route path="/home">
-            <BillsPage></BillsPage>
+            <Home></Home>
           </Route>
           <Route path="/login">
             <Login></Login>
@@ -34,8 +36,11 @@ function App() {
           <Route path="/dashboard">
             <DashboardNav></DashboardNav>
           </Route>
-          <Route path="/billsPage">
+          <Route exact path="/billsPage">
             <BillsPage></BillsPage>
+          </Route>
+          <Route exact path="/billsPage/edit/:id">
+            <EditBillInfo></EditBillInfo>
           </Route>
           <Route path="/contacts">
             <Contacts></Contacts>

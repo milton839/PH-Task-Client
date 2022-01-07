@@ -66,7 +66,7 @@ const DashboardNav = () => {
             time:new Date().toLocaleDateString(),
         }
 
-        const url = `http://localhost:5000/addNewBill`;
+        const url = `https://enigmatic-depths-87750.herokuapp.com/addNewBill`;
         fetch(url,{
             method:'POST',
             headers:{

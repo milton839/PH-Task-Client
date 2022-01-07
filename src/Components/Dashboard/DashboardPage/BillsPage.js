@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import DashboardNav from '../Dashboard/DashboardNav';
-import LeadView from './BillsPageData';
+import BillsPageData from './BillsPageData';
 
 const BillsPage = () => {
     const [billsData, setBillsData] = useState([]);
+    const [pageCount, setPageCount] = useState(0);
+    const [page, setPage] = useState(0);
+    const size = 10;
     useEffect(() => {
-        fetch('http://localhost:5000/allBills')
+        fetch(`https://enigmatic-depths-87750.herokuapp.com/allBills?page=${page}&&size=${size}`)
         .then((response) =>response.json())
-        .then((data) => setBillsData(data));
-    })
+        .then((data) => {
+            setBillsData(data.allBills)
+            const count = data.count;
+            const pageNumber = Math.ceil(count/size);
+            setPageCount(pageNumber);
+        });
+    },[page])
     return (
         <section className="">
             <div>
@@ -26,10 +34,21 @@ const BillsPage = () => {
                     </thead>
                     <tbody>
                         {
-                            billsData.map(bills => <LeadView bills={bills} key={bills._id}></LeadView>)
+                            billsData.map(bills => <BillsPageData bills={bills} key={bills._id}></BillsPageData>)
                         }
                     </tbody>
                 </table>
+            </div>
+            <div style={{margin:'20px 40px 40px 290px'}}>
+                {
+                    [...Array(pageCount).keys()].map(number => 
+                        <button 
+                            className = {number === page ? 'btn btn-success me-1 px-4' : 'btn btn-primary me-1 px-4'}
+                            key={number}
+                            onClick = {() => setPage(number)}
+                            >{number+1}</button>
+                        )
+                }
             </div>
         </section>
     );
