@@ -1,43 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DashboardNav from '../Dashboard/DashboardNav';
-import LeadView from './LeadView';
-
-const leadsData = [
-    {
-        name:'Faisal Ahmed',
-        email:'faisal@gmail.com',
-        phone:'01993810091',
-    },
-    {
-        name:'Firoj Zaman',
-        email:'firoz@gmail.com',
-        phone:'01993810092',
-    },
-    {
-        name:'Jahidul Islam',
-        email:'jahidul@gmail.com',
-        phone:'01993810093',
-    },
-    {
-        name:'Shafiur Rahman',
-        email:'shafi@gmail.com',
-        phone:'01993810094',
-    },
-    {
-        name:'Azizul Islam',
-        email:'azizul@gmail.com',
-        phone:'01993810095',
-    },
-]
+import LeadView from './BillsPageData';
 
 const BillsPage = () => {
+    const [billsData, setBillsData] = useState([]);
+    useEffect(() => {
+        fetch('http://localhost:5000/allBills')
+        .then((response) =>response.json())
+        .then((data) => setBillsData(data));
+    })
     return (
         <section className="">
             <div>
                 <DashboardNav></DashboardNav>
             </div>
             <div className="text-center" style={{margin:'20px 40px 40px 290px'}}>
-                <h3>Total Records: {leadsData.length}</h3>
+                <h3>Total Records: {billsData.length}</h3>
                 <table className="table table-striped table-hover">
                     <thead>
                         <th>Name</th>
@@ -48,7 +26,7 @@ const BillsPage = () => {
                     </thead>
                     <tbody>
                         {
-                            leadsData.map(lead => <LeadView lead={lead} key={lead.email}></LeadView>)
+                            billsData.map(bills => <LeadView bills={bills} key={bills._id}></LeadView>)
                         }
                     </tbody>
                 </table>
